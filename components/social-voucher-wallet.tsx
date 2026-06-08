@@ -92,7 +92,6 @@ export function SocialVoucherWallet() {
   const [currentView, setCurrentView] = useState<View>("login")
   const [selectedVoucher, setSelectedVoucher] = useState<VoucherId>("alimentacao")
   const [qrRefreshKey, setQrRefreshKey] = useState(0)
-  
   // Web3 hooks - MetaMask Embedded Wallets (Web3Auth)
   const wallet = useWallet()
   const { balances, totalBalance, isLoading: isLoadingBalances, refetch } = useVoucherBalance()

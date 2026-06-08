@@ -1,43 +1,33 @@
 import withPWA from '@ducanh2912/next-pwa'
 
+const isDev = process.env.NODE_ENV === 'development'
+
 const pwaConfig = withPWA({
   dest: 'public',
   register: true,
   skipWaiting: true,
-  disable: false,
+  disable: isDev, // Desabilita PWA em desenvolvimento
   reloadOnOnline: true,
   cacheOnFrontEndNav: true,
-  aggressiveFrontEndNavCaching: true,
+  aggressiveFrontEndNavCaching: false,
   fallbacks: {
     document: '/offline',
+  },
+  workboxOptions: {
+    disableDevLogs: true,
   },
 })
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  output: 'export',
   typescript: {
     ignoreBuildErrors: true,
   },
   images: {
     unoptimized: true,
   },
-  // PWA plugin usa webpack — necessário para evitar erro do Next.js 16
-  turbopack: {},
-  async headers() {
-    return [
-      {
-        source: '/(.*)',
-        headers: [
-          { key: 'Access-Control-Allow-Origin', value: '*' },
-          { key: 'X-Content-Type-Options', value: 'nosniff' },
-          { key: 'X-Frame-Options', value: 'DENY' },
-          { key: 'X-XSS-Protection', value: '1; mode=block' },
-          { key: 'Referrer-Policy', value: 'strict-origin-when-cross-origin' },
-          { key: 'Permissions-Policy', value: 'camera=(self), microphone=(), geolocation=(self)' },
-        ],
-      },
-    ]
-  },
+  trailingSlash: true,
 }
 
 export default pwaConfig(nextConfig)

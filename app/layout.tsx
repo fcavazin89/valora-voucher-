@@ -1,6 +1,5 @@
 import type { Metadata, Viewport } from 'next'
 import { Geist, Geist_Mono } from 'next/font/google'
-import { Analytics } from '@vercel/analytics/next'
 import { Providers } from '@/components/providers'
 import { InstallPWA } from '@/components/install-pwa'
 import './globals.css'
@@ -77,7 +76,6 @@ export default function RootLayout({
           {children}
           <InstallPWA />
         </Providers>
-        {process.env.NODE_ENV === 'production' && <Analytics />}
       </body>
     </html>
   )

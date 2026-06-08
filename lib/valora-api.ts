@@ -28,6 +28,14 @@ export const beneficiarioApi = {
 export const comercioApi = {
   getAll: (params?: string) => apiFetch<any>(`/comercios${params ? `?${params}` : ""}`),
   getById: (id: number) => apiFetch<any>(`/comercios/${id}`),
+  getByWallet: async (walletAddress: string): Promise<any | null> => {
+    try {
+      const data = await apiFetch<any>(`/comercios?wallet_address=${walletAddress}`)
+      return data?.data?.[0] ?? data?.[0] ?? null
+    } catch {
+      return null
+    }
+  },
   verificarEndereco: async (address: string): Promise<boolean> => {
     try {
       const data = await apiFetch<any>(`/comercios?wallet_address=${address}`)
